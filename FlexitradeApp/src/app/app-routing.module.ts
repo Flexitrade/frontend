@@ -2,20 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SuccessComponent } from './success/success.component';
+import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [{
-  path: 'login',
-  component: LoginComponent,
-},
-{
-  path: 'success',
-  component: SuccessComponent,
-},
-{
-  path: '',
-  pathMatch: 'full',
-  redirectTo: 'login',
-},];
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: '', component: HomeComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

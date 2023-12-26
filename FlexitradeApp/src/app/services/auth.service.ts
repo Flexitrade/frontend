@@ -19,8 +19,9 @@ export class AuthService {
   private readonly API_SYSTEM_USER_NAME = 'API_SYSTEM_USER_NAME';
 
   jwtPayload: any;
-  tokenURL: string = environment.apiURLBase + environment.tokenUrl
-  refreshTokenUrl: string = environment.apiURLBase + environment.refreshTokenUrl
+  tokenURL: string = environment.apiURLBase + environment.tokenUrl;
+  refreshTokenUrl: string = environment.apiURLBase + environment.refreshTokenUrl;
+  loginUrl: string = environment.apiURLBase + environment.loginUrl;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
@@ -104,7 +105,7 @@ export class AuthService {
     const body = '{"username": "' + username + '", "password": "' + password + '"}';
     const headers = { 'Content-Type': 'application/json' }
 
-    return this.http.post<TokenResponse>(this.tokenURL, body, { headers });
+    return this.http.post<TokenResponse>(this.loginUrl, body, { headers });
   }
 
   refreshToken(): Observable<RefreshTokenResponse> {

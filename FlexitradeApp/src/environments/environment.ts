@@ -11,6 +11,6 @@ export const environment = {
   serverLogLevel: NgxLoggerLevel.OFF,
   apiURLBase: 'http://localhost:8060',
   tokenUrl: '/auth/token',
-  refreshTokenUrl: '/auth/refreshToken'
-
+  refreshTokenUrl: '/gateway/refreshToken',
+  loginUrl: '/auth/login'
 };

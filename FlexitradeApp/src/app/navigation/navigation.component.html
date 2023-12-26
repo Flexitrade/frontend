@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
-    <div>
-        <button mat-icon-button>
-            <mat-icon class="mat-18">menu</mat-icon>
-        </button>
-    </div>
-    <div><a routerLink="/">flexitrade</a></div>
-    <div>
-        <ul class="nav-items">
-            <li><a routerLink="/dashboard">Dashboard</a></li>
-            <li><a routerLink="/products">Products</a></li>
-        </ul>
-    </div>
+    <mat-toolbar-row>
+        <span><a routerLink="/">flexitrade</a></span>
+        <span class="nav-spacer"></span>
+        <ng-container *ngIf="(authService.isLoggedIn$ | async); else loginOrRegister">
+            <button *ngIf="authService.isLoggedIn$ | async" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </ng-container>
+        <ng-template #loginOrRegister>
+            <ul class="nav-items">
+                <li><a routerLink="/" (click)="open(loginComponent)">Login</a></li>
+                <li><a routerLink="/register">Register</a></li>
+            </ul>
+        </ng-template>
+    </mat-toolbar-row>
 </mat-toolbar>

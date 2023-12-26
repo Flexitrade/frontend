@@ -1,2 +1,7 @@
-<app-navigation *ngIf="authService.isLoggedIn$ | async"></app-navigation>
-<router-outlet></router-outlet>
+<app-navigation></app-navigation>
+<ng-container *ngIf="authService.isLoggedIn$ | async; else defaultPage">
+    <router-outlet></router-outlet>
+</ng-container>
+<ng-template #defaultPage>
+    <p>This is default page for flexitrade</p>
+</ng-template>

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReactiveFormsModule, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { tap } from 'rxjs';
-
+import { ModalOverlayRef } from '../overlay/modaloverlayref';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +10,7 @@ import { tap } from 'rxjs';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+  errorMessage = "";
   savedUsername = this.authService.getUsername();
   form: FormGroup = this.formBuilder.group({
     username: [this.savedUsername, Validators.required],
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private ref: ModalOverlayRef) { }
 
   ngOnInit() {
   }
@@ -45,16 +46,28 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.authService.setIsLoggedIn();
           this.router.navigate(['/']);
-        }, error: errorResponse => {
+          this.close("login successful");
+        },
+        error: errorResponse => {
           this.loading = false;
-          if (errorResponse.error === 400) {
+          if (errorResponse.status === 400) {
+            this.errorMessage = errorResponse.error.cause;
             console.log('User or password invalid');
+          } else if (errorResponse.status === 403) {
+            this.errorMessage = errorResponse.error.cause;
           }
         },
+
       });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
       this.loading = false;
+      console.log(error);
+      if (error instanceof Error) this.errorMessage = error.message
+      else this.errorMessage = String(error)
     }
+  }
+
+  close(value: string) {
+    this.ref.close(value);
   }
 }

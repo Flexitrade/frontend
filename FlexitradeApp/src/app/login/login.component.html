@@ -1,8 +1,5 @@
-<div>
+<div class="center">
     <form [formGroup]="form" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
-        <div>
-            Welcome!
-        </div>
         <mat-card>
             <mat-card-content>
                 <mat-form-field class="full-width">
@@ -10,6 +7,10 @@
                     <mat-icon matSuffix>person</mat-icon>
                     <mat-error *ngIf="form.controls['username'].hasError('required')">Username is needed</mat-error>
                 </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
                 <mat-form-field class="full-width">
                     <input matInput placeholder="password" formControlName="password"
                         [type]="showPassword ? 'text' : 'password'" required>
@@ -20,12 +21,16 @@
             </mat-card-content>
         </mat-card>
         <mat-card class="div-actions">
-            <button mat-raised-button id="login" color="primary" (click)="login()">Enter</button>
+            <button mat-raised-button id="login" color="primary" (click)="login()" class="full-width">Enter</button>
             <div>
-                <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+                <mat-checkbox formControlName="rememberMe" class="full-width">Remember me</mat-checkbox>
             </div>
             <div>
-                <button type="button" mat-button [routerLink]="['/auth/forgotpassword']">Forgot password</button>
+                <p class="full-width" *ngIf="errorMessage != ''">Error: {{ errorMessage }}</p>
+            </div>
+            <div>
+                <button type="button" mat-button [routerLink]="['/auth/forgotpassword']" class="full-width">Forgot
+                    password</button>
             </div>
             <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
         </mat-card>
